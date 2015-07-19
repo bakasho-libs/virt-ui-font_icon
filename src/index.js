@@ -76,13 +76,13 @@ FontIconPrototype.getStyle = function() {
         fontIcon = theme.styles.fontIcon,
         spacing = theme.spacing,
         props = this.props,
-        style = {
+        style = extend({}, props.style, {
             position: "relative",
             fontSize: spacing.iconSize + "px",
             display: "inline-block",
 
             color: props.color || fontIcon.color || "black"
-        };
+        });
 
     if (this.state.hover) {
         style.color = props.hoverColor || fontIcon.hoverColor || style.color;
@@ -97,9 +97,9 @@ FontIconPrototype.getStyle = function() {
 FontIconPrototype.render = function() {
     var props = extend({}, this.props);
 
-    props.className = "virt-ui-SVGIcon" + (props.className ? " " + props.className : "");
+    props.className = "virt-ui-FontIcon" + (props.className ? " " + props.className : "");
 
-    props.style = extend(this.getStyle(), props.style);
+    props.style = this.getStyle();
 
     props.onMouseOver = this.onMouseOver;
     props.onMouseOut = this.onMouseOut;
