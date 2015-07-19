@@ -78,9 +78,9 @@ FontIconPrototype.getStyle = function() {
         props = this.props,
         style = extend({}, props.style, {
             position: "relative",
-            fontSize: spacing.iconSize + "px",
+            fontSize: (props.size || spacing.iconSize) + "px",
             display: "inline-block",
-            lineHeight: spacing.iconSize + "px",
+            lineHeight: (props.size || spacing.iconSize) + "px",
             color: props.color || fontIcon.color || "black"
         });
 
