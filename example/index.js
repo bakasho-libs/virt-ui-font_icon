@@ -7873,7 +7873,7 @@ FontIconPrototype.getStyle = function() {
 FontIconPrototype.render = function() {
     var props = extend({}, this.props);
 
-    props.className = "virt-ui-FontIcon " + props.className;
+    props.className = "virt-ui-SVGIcon" + (props.className ? " " + props.className : "");
 
     props.style = extend(this.getStyle(), props.style);
 
