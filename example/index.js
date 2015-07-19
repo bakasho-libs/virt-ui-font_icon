@@ -8210,7 +8210,7 @@ FontIconPrototype.getStyle = function() {
             position: "relative",
             fontSize: spacing.iconSize + "px",
             display: "inline-block",
-
+            lineHeight: spacing.iconSize + "px",
             color: props.color || fontIcon.color || "black"
         });
 
