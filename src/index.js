@@ -30,11 +30,9 @@ virt.Component.extend(FontIcon, "virt-ui-FontIcon");
 
 FontIcon.contextTypes = {
     muiTheme: propTypes.implement({
-        styles: propTypes.implement({
-            fontIcon: propTypes.implement({
-                color: propTypes.string,
-                hoverColor: propTypes.string
-            }).isRequired
+        palette: propTypes.implement({
+            accentColor: propTypes.string.isRequired,
+            primaryTextColor: propTypes.string.isRequired
         }).isRequired,
         spacing: propTypes.implement({
             iconSize: propTypes.number.isRequired
@@ -73,19 +71,20 @@ FontIconPrototype.__onMouseOut = function(e) {
 
 FontIconPrototype.getStyle = function() {
     var theme = this.context.muiTheme,
-        fontIcon = theme.styles.fontIcon,
+        palette = theme.palette,
         spacing = theme.spacing,
         props = this.props,
-        style = extend({}, props.style, {
+        style = extend({}, {
             position: "relative",
             fontSize: (props.size || spacing.iconSize) + "px",
             display: "inline-block",
             lineHeight: (props.size || spacing.iconSize) + "px",
-            color: props.color || fontIcon.color || "black"
-        });
+            color: props.color || palette.primaryTextColor || "black",
+            cursor: "pointer"
+        }, props.style);
 
     if (this.state.hover) {
-        style.color = props.hoverColor || fontIcon.hoverColor || style.color;
+        style.color = props.hoverColor || palette.accentColor;
     }
 
     css.userSelect(style, "none");

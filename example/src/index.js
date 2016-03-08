@@ -15,11 +15,9 @@ AppPrototype = App.prototype;
 AppPrototype.getChildContext = function() {
     return {
         muiTheme: {
-            styles: {
-                fontIcon: {
-                    color: "#000000",
-                    hoverColor: "#ff0000"
-                }
+            palette: {
+                accentColor: "#FF3F80",
+                primaryTextColor: "rgba(0,0,0,0.87)"
             },
             spacing: {
                 iconSize: 16

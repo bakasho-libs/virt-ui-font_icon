@@ -76,11 +76,9 @@ AppPrototype = App.prototype;
 AppPrototype.getChildContext = function() {
     return {
         muiTheme: {
-            styles: {
-                fontIcon: {
-                    color: "#000000",
-                    hoverColor: "#ff0000"
-                }
+            palette: {
+                accentColor: "#FF3F80",
+                primaryTextColor: "rgba(0,0,0,0.87)"
             },
             spacing: {
                 iconSize: 16
@@ -211,11 +209,9 @@ virt.Component.extend(FontIcon, "virt-ui-FontIcon");
 
 FontIcon.contextTypes = {
     muiTheme: propTypes.implement({
-        styles: propTypes.implement({
-            fontIcon: propTypes.implement({
-                color: propTypes.string,
-                hoverColor: propTypes.string
-            }).isRequired
+        palette: propTypes.implement({
+            accentColor: propTypes.string.isRequired,
+            primaryTextColor: propTypes.string.isRequired
         }).isRequired,
         spacing: propTypes.implement({
             iconSize: propTypes.number.isRequired
@@ -254,19 +250,20 @@ FontIconPrototype.__onMouseOut = function(e) {
 
 FontIconPrototype.getStyle = function() {
     var theme = this.context.muiTheme,
-        fontIcon = theme.styles.fontIcon,
+        palette = theme.palette,
         spacing = theme.spacing,
         props = this.props,
-        style = extend({}, props.style, {
+        style = extend({}, {
             position: "relative",
             fontSize: (props.size || spacing.iconSize) + "px",
             display: "inline-block",
             lineHeight: (props.size || spacing.iconSize) + "px",
-            color: props.color || fontIcon.color || "black"
-        });
+            color: props.color || palette.primaryTextColor || "black",
+            cursor: "pointer"
+        }, props.style);
 
     if (this.state.hover) {
-        style.color = props.hoverColor || fontIcon.hoverColor || style.color;
+        style.color = props.hoverColor || palette.accentColor;
     }
 
     css.userSelect(style, "none");
@@ -1258,7 +1255,7 @@ function isUndefined(value) {
 
 },
 function(require, exports, module, undefined, global) {
-/* ../../node_modules/virt/node_modules/is_native/src/index.js */
+/* ../../node_modules/virt/node_modules/is_array/node_modules/is_native/src/index.js */
 
 var isFunction = require(16),
     isNullOrUndefined = require(20),
@@ -1978,7 +1975,7 @@ NodePrototype.__mountChildren = function(renderedView, transaction) {
 
     this.renderedChildren = renderedChildren;
 
-    renderedView.children = arrayMap(renderedView.children, function(child, index) {
+    renderedView.children = arrayMap(renderedView.children, function renderChild(child, index) {
         var node, id;
 
         if (isPrimitiveView(child)) {
@@ -9790,6 +9787,38 @@ propTypes.oneOf = function createOneOfCheck(expectedValues) {
     });
 };
 
+propTypes.arrayOf = function createArrayOfCheck(checkType) {
+
+    if (!isFunction(checkType)) {
+        throw new TypeError(
+            "Invalid Function Interface for arrayOf, checkType must be a function" +
+            "Function(props: Object, propName: String, callerName: String, locale) return Error or null."
+        );
+    }
+
+    return createTypeChecker(function validateArrayOf(props, propName, callerName, locale) {
+        var error = propTypes.array(props, propName, callerName, locale),
+            propValue, i, il;
+
+        if (error) {
+            return error;
+        } else {
+            propValue = props[propName];
+            i = -1;
+            il = propValue.length - 1;
+
+            while (i++ < il) {
+                error = checkType(propValue, i, callerName + "[" + i + "]", locale);
+                if (error) {
+                    return error;
+                }
+            }
+
+            return null;
+        }
+    });
+};
+
 propTypes.implement = function createImplementCheck(expectedInterface) {
     var key;
 
@@ -9924,7 +9953,7 @@ css.lighten = require(212);
 
 },
 function(require, exports, module, undefined, global) {
-/* ../../node_modules/i18n/src/index.js */
+/* ../../node_modules/prop_types/node_modules/i18n/src/index.js */
 
 var isArray = require(17),
     isString = require(18),
@@ -10078,7 +10107,7 @@ function create(flatMode, throwMissingError) {
 
 },
 function(require, exports, module, undefined, global) {
-/* ../../node_modules/is_regexp/src/index.js */
+/* ../../node_modules/prop_types/node_modules/is_regexp/src/index.js */
 
 var isObject = require(30);
 
@@ -10124,7 +10153,7 @@ module.exports = {
 
 },
 function(require, exports, module, undefined, global) {
-/* ../../node_modules/format/src/index.js */
+/* ../../node_modules/prop_types/node_modules/format/src/index.js */
 
 var isString = require(18),
     isObject = require(30),
@@ -10248,7 +10277,7 @@ format.inspect = format.o;
 
 },
 function(require, exports, module, undefined, global) {
-/* ../../node_modules/fast_slice/src/index.js */
+/* ../../node_modules/prop_types/node_modules/fast_slice/src/index.js */
 
 var clamp = require(199),
     isNumber = require(21);
@@ -10278,7 +10307,7 @@ function fastSlice(array, offset) {
 
 },
 function(require, exports, module, undefined, global) {
-/* ../../node_modules/clamp/src/index.js */
+/* ../../node_modules/prop_types/node_modules/clamp/src/index.js */
 
 module.exports = clamp;
 
