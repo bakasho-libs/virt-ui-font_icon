@@ -74,14 +74,16 @@ FontIconPrototype.getStyle = function() {
         palette = theme.palette,
         spacing = theme.spacing,
         props = this.props,
-        style = extend({}, {
+        style = {
             position: "relative",
             fontSize: (props.size || spacing.iconSize) + "px",
             display: "inline-block",
             lineHeight: (props.size || spacing.iconSize) + "px",
             color: props.color || palette.primaryTextColor || "black",
             cursor: "pointer"
-        }, props.style);
+        };
+
+
 
     if (this.state.hover) {
         style.color = props.hoverColor || palette.accentColor;
@@ -98,7 +100,7 @@ FontIconPrototype.render = function() {
 
     props.className = "virt-ui-FontIcon" + (props.className ? " " + props.className : "");
 
-    props.style = this.getStyle();
+    props.style = extend(this.getStyle(), props.style);
 
     props.onMouseOver = this.onMouseOver;
     props.onMouseOut = this.onMouseOut;
