@@ -1,7 +1,7 @@
-var virt = require("virt"),
-    propTypes = require("prop_types"),
-    css = require("css"),
-    extend = require("extend");
+var virt = require("@nathanfaucett/virt"),
+    propTypes = require("@nathanfaucett/prop_types"),
+    css = require("@nathanfaucett/css"),
+    extend = require("@nathanfaucett/extend");
 
 
 var FontIconPrototype;
