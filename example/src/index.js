@@ -14,7 +14,7 @@ AppPrototype = App.prototype;
 
 AppPrototype.getChildContext = function() {
     return {
-        muiTheme: {
+        theme: {
             palette: {
                 accentColor: "#FF3F80",
                 primaryTextColor: "rgba(0,0,0,0.87)"

@@ -29,7 +29,7 @@ function FontIcon(props, children, context) {
 virt.Component.extend(FontIcon, "virt-ui-FontIcon");
 
 FontIcon.contextTypes = {
-    muiTheme: propTypes.implement({
+    theme: propTypes.implement({
         palette: propTypes.implement({
             accentColor: propTypes.string.isRequired,
             primaryTextColor: propTypes.string.isRequired
@@ -70,7 +70,7 @@ FontIconPrototype.__onMouseOut = function(e) {
 };
 
 FontIconPrototype.getStyle = function() {
-    var theme = this.context.muiTheme,
+    var theme = this.context.theme,
         palette = theme.palette,
         spacing = theme.spacing,
         props = this.props,
